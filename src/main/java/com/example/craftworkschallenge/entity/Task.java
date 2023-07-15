@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
@@ -20,18 +22,22 @@ public class Task {
     private UUID id;
 
     @Column(name = "createdAt")
+    @NotNull
     private LocalDateTime createdAt;
 
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
     @Column(name = "dueDate")
+    @NotNull
     private LocalDateTime dueDate;
 
     @Column(name = "resolvedAt")
     private LocalDateTime resolvedAt;
 
     @Column(name = "title")
+    @NotNull
+    @NotBlank
     private String title;
 
     @Column(name = "description")
