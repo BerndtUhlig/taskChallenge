@@ -1,5 +1,8 @@
 package com.example.craftworkschallenge.exceptions;
 
+/**
+ * NotFoundException to be thrown should a given ID for a requested Task not exist.
+ */
 public class NotFoundException  extends RuntimeException{
 
     public NotFoundException() {

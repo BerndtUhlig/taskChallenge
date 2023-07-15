@@ -11,6 +11,19 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+
+/**
+ * DTO including ID. This TaskDTO is supposed to be returned by the backend.
+ * @param id
+ * @param createdAt
+ * @param updatedAt
+ * @param dueDate
+ * @param resolvedAt
+ * @param title
+ * @param description
+ * @param priority
+ * @param status
+ */
 public record TaskDetailDTO(
         UUID id,
         @NotNull

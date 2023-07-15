@@ -14,6 +14,10 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Scheduler which creates a new Task and pushes it into the repository every 10 seconds.
+ */
+
 @ControllerAdvice
 public class TaskCreatorScheduler {
 
@@ -30,15 +34,20 @@ public class TaskCreatorScheduler {
     }
 
 
+    /**
+     * Adds a task roughly every 10 seconds (10000ms).
+     * The task is set as Created at the current time and is due 3 days from now.
+     * All other values are static.
+     */
     @Scheduled(fixedDelay = 10000)
     public void addTask(){
         Task task = new Task();
         task.setStatus(Status.PENDING);
         task.setTitle("This is a test no." + count);
+        task.setDescription("Check me out.");
         task.setResolvedAt(null);
         task.setCreatedAt(LocalDateTime.now());
         task.setDueDate(LocalDateTime.now().plusDays(3));
-        task.setTitle("Hi");
         task.setPriority(Priority.VERY_HIGH);
         task.setUpdatedAt(null);
         LOGGER.info("SCHEDULER: " + String.format("Adding new task No. %s",count));

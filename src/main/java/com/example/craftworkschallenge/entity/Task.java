@@ -14,6 +14,9 @@ import org.springframework.cglib.core.Local;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Task Entity, which is saved in the Database.
+ */
 @Entity(name = "task")
 public class Task {
 

@@ -6,6 +6,10 @@ import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Task Service Interface
+ */
+
 public interface TaskService {
     void createNewTask(TaskCreateDTO task);
 
