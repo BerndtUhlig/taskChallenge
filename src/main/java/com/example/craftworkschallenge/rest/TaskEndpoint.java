@@ -1,5 +1,6 @@
 package com.example.craftworkschallenge.rest;
 
+import com.example.craftworkschallenge.dto.TaskCreateDTO;
 import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import com.example.craftworkschallenge.service.TaskService;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class TaskEndpoint {
 
 
     @PostMapping
-    public void createNewTask(@RequestBody @Valid TaskDetailDTO dto){
+    public void createNewTask(@RequestBody @Valid TaskCreateDTO dto){
         taskService.createNewTask(dto);
     }
 

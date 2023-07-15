@@ -1,18 +1,19 @@
 package com.example.craftworkschallenge.service;
 
-import com.example.craftworkschallenge.dto.TaskDTO;
+import com.example.craftworkschallenge.dto.TaskCreateDTO;
+import com.example.craftworkschallenge.dto.TaskDetailDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface TaskService {
-    void createNewTask(TaskDTO task);
+    void createNewTask(TaskCreateDTO task);
 
-    List<TaskDTO> getAllTasks();
+    List<TaskDetailDTO> getAllTasks();
 
-    TaskDTO getTaskByID(UUID id);
+    TaskDetailDTO getTaskByID(UUID id);
 
-    TaskDTO updateTaskByID(UUID id, TaskDTO task);
+    TaskDetailDTO updateTaskByID(UUID id, TaskDetailDTO task);
 
     void deleteTaskByID(UUID id);
 }

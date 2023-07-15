@@ -1,13 +1,13 @@
 package com.example.craftworkschallenge.service.impl;
 
-import com.example.craftworkschallenge.dto.TaskDTO;
+import com.example.craftworkschallenge.dto.TaskCreateDTO;
+import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import com.example.craftworkschallenge.entity.Task;
 import com.example.craftworkschallenge.exceptions.NotFoundException;
 import com.example.craftworkschallenge.mapper.TaskMapper;
 import com.example.craftworkschallenge.repository.TaskRepository;
 import com.example.craftworkschallenge.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,23 +29,23 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public void createNewTask(TaskDTO task) {
-        taskRepository.save(taskMapper.taskDTOtoEntity(task));
+    public void createNewTask(TaskCreateDTO task) {
+        taskRepository.save(taskMapper.taskCreateDTOtoEntity(task));
     }
 
     @Override
-    public List<TaskDTO> getAllTasks() {
-        return taskRepository.findAll().stream().map(taskMapper::taskEntityToDTO).collect(Collectors.toList());
+    public List<TaskDetailDTO> getAllTasks() {
+        return taskRepository.findAll().stream().map(taskMapper::taskEntityToDetailDTO).collect(Collectors.toList());
     }
 
     @Override
-    public TaskDTO getTaskByID(UUID id) {
+    public TaskDetailDTO getTaskByID(UUID id) {
         Optional<Task> task = taskRepository.findById(id);
-        return task.map(taskMapper::taskEntityToDTO).orElse(null);
+        return task.map(taskMapper::taskEntityToDetailDTO).orElse(null);
     }
 
     @Override
-    public TaskDTO updateTaskByID(UUID id, TaskDTO taskDTO) {
+    public TaskDetailDTO updateTaskByID(UUID id, TaskDetailDTO taskDTO) {
        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
        task.setDescription(taskDTO.description());
        task.setCreatedAt(taskDTO.createdAt());
@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
        task.setTitle(taskDTO.title());
        task.setResolvedAt(taskDTO.resolvedAt());
        taskRepository.save(task);
-       return this.taskMapper.taskEntityToDTO(task);
+       return this.taskMapper.taskEntityToDetailDTO(task);
     }
 
     @Override
