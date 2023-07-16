@@ -1,6 +1,6 @@
 package com.example.craftworkschallenge.service.impl;
 
-import com.example.craftworkschallenge.dto.TaskCreateDTO;
+import com.example.craftworkschallenge.dto.TaskInputDTO;
 import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import com.example.craftworkschallenge.entity.Task;
 import com.example.craftworkschallenge.exceptions.NotFoundException;
@@ -10,8 +10,8 @@ import com.example.craftworkschallenge.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public void createNewTask(TaskCreateDTO task) {
+    public void createNewTask(TaskInputDTO task) {
         taskRepository.save(taskMapper.taskCreateDTOtoEntity(task));
     }
 
@@ -44,17 +44,17 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDetailDTO getTaskByID(UUID id) {
-        Optional<Task> task = taskRepository.findById(id);
-        return task.map(taskMapper::taskEntityToDetailDTO).orElse(null);
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
+        return taskMapper.taskEntityToDetailDTO(task);
     }
 
     @Override
-    public TaskDetailDTO updateTaskByID(UUID id, TaskDetailDTO taskDTO) {
+    public TaskDetailDTO updateTaskByID(UUID id, TaskInputDTO taskDTO) {
        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
        task.setDescription(taskDTO.description());
        task.setCreatedAt(taskDTO.createdAt());
        task.setDueDate(taskDTO.dueDate());
-       task.setUpdatedAt(taskDTO.updatedAt());
+       task.setUpdatedAt(LocalDateTime.now());
        task.setPriority(taskDTO.priority());
        task.setStatus(taskDTO.status());
        task.setTitle(taskDTO.title());

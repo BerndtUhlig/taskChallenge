@@ -1,6 +1,6 @@
 package com.example.craftworkschallenge.rest;
 
-import com.example.craftworkschallenge.dto.TaskCreateDTO;
+import com.example.craftworkschallenge.dto.TaskInputDTO;
 import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import com.example.craftworkschallenge.exceptions.NotFoundException;
 import com.example.craftworkschallenge.service.TaskService;
@@ -33,7 +33,7 @@ public class TaskEndpoint {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewTask(@RequestBody @Valid TaskCreateDTO dto){
+    public void createNewTask(@RequestBody @Valid TaskInputDTO dto){
         taskService.createNewTask(dto);
     }
 
@@ -66,8 +66,13 @@ public class TaskEndpoint {
      * @return The updated Task.
      */
     @PutMapping(value = "/{id}")
-    public TaskDetailDTO updateTaskByID(@PathVariable UUID id, @RequestBody TaskDetailDTO taskDTO){
+    public TaskDetailDTO updateTaskByID(@PathVariable UUID id, @RequestBody TaskInputDTO taskDTO){
+        try {
         return taskService.updateTaskByID(id, taskDTO);
+
+        } catch(NotFoundException e)    {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
     /**

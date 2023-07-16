@@ -26,21 +26,21 @@ import java.util.UUID;
  */
 public record TaskDetailDTO(
         UUID id,
-        @NotNull
+        @NotNull(message="A timestamp for task creation must be provided!")
         LocalDateTime createdAt,
 
         LocalDateTime updatedAt,
-        @NotNull
+        @NotNull(message="A due date must be provided!")
         LocalDateTime dueDate,
         LocalDateTime resolvedAt,
-        @NotNull
-        @NotBlank
+        @NotNull(message="A title must be provided!")
+        @NotBlank(message="The title must not be blank!")
         @Size(max = 250, message="Task description must not be longer than 1000 characters.")
         String title,
         @Size(max = 1000, message="Task description must not be longer than 1000 characters.")
         String description,
-        @NotNull
+        @NotNull(message="A priority must be provided!")
         Priority priority,
-        @NotNull
+        @NotNull(message="A status must be provided!")
         Status status) {
 }

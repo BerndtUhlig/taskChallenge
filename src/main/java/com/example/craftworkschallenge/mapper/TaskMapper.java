@@ -1,6 +1,6 @@
 package com.example.craftworkschallenge.mapper;
 
-import com.example.craftworkschallenge.dto.TaskCreateDTO;
+import com.example.craftworkschallenge.dto.TaskInputDTO;
 import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import com.example.craftworkschallenge.entity.Task;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class TaskMapper {
      * @param task The TaskCreateDTO to be mapped to a task entity.
      * @return A Task entity based on the DTO.
      */
-    public Task taskCreateDTOtoEntity(TaskCreateDTO task){
+    public Task taskCreateDTOtoEntity(TaskInputDTO task){
         return new Task(task.createdAt(), task.updatedAt(), task.dueDate(), task.resolvedAt(), task.title(), task.description(), task.priority(), task.status());
     }
     /**

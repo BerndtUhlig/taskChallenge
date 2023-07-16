@@ -1,6 +1,6 @@
 package com.example.craftworkschallenge.service;
 
-import com.example.craftworkschallenge.dto.TaskCreateDTO;
+import com.example.craftworkschallenge.dto.TaskInputDTO;
 import com.example.craftworkschallenge.dto.TaskDetailDTO;
 
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.UUID;
  */
 
 public interface TaskService {
-    void createNewTask(TaskCreateDTO task);
+    void createNewTask(TaskInputDTO task);
 
     List<TaskDetailDTO> getAllTasks();
 
     TaskDetailDTO getTaskByID(UUID id);
 
-    TaskDetailDTO updateTaskByID(UUID id, TaskDetailDTO task);
+    TaskDetailDTO updateTaskByID(UUID id, TaskInputDTO task);
 
     void deleteTaskByID(UUID id);
 }
