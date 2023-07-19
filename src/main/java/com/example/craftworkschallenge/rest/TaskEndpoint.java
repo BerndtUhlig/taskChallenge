@@ -5,11 +5,14 @@ import com.example.craftworkschallenge.dto.TaskDetailDTO;
 import com.example.craftworkschallenge.exceptions.NotFoundException;
 import com.example.craftworkschallenge.service.TaskService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +23,8 @@ import java.util.UUID;
 @RequestMapping(value = "/tasks")
 public class TaskEndpoint {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup()
+            .lookupClass());
     TaskService taskService;
     @Autowired
     public TaskEndpoint(TaskService taskService){
@@ -53,11 +58,7 @@ public class TaskEndpoint {
      */
     @GetMapping(value = "/{id}")
     public TaskDetailDTO getTaskByID(@PathVariable UUID id){
-        try{
             return taskService.getTaskByID(id);
-        } catch(NotFoundException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
     }
 
 
@@ -66,13 +67,8 @@ public class TaskEndpoint {
      * @return The updated Task.
      */
     @PutMapping(value = "/{id}")
-    public TaskDetailDTO updateTaskByID(@PathVariable UUID id, @RequestBody TaskInputDTO taskDTO){
-        try {
+    public TaskDetailDTO updateTaskByID(@PathVariable UUID id, @RequestBody @Valid TaskInputDTO taskDTO){
         return taskService.updateTaskByID(id, taskDTO);
-
-        } catch(NotFoundException e)    {
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
     }
 
     /**

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * Scheduler which creates a new Task and pushes it into the repository every 10 seconds.
@@ -55,4 +54,6 @@ public class TaskCreatorScheduler {
         taskRepository.save(task);
 
     }
+
+
 }

@@ -7,9 +7,12 @@ import com.example.craftworkschallenge.exceptions.NotFoundException;
 import com.example.craftworkschallenge.mapper.TaskMapper;
 import com.example.craftworkschallenge.repository.TaskRepository;
 import com.example.craftworkschallenge.service.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +25,8 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup()
+            .lookupClass());
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
 
@@ -39,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDetailDTO> getAllTasks() {
-        return taskRepository.findAll().stream().map(taskMapper::taskEntityToDetailDTO).collect(Collectors.toList());
+        return taskRepository.findAll().stream().map(taskMapper::taskEntityToDetailDTO).toList();
     }
 
     @Override
@@ -65,6 +70,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTaskByID(UUID id) {
+        taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
         taskRepository.deleteById(id);
     }
+
 }
