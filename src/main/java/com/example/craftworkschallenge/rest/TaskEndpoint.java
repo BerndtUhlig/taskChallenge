@@ -39,6 +39,7 @@ public class TaskEndpoint {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createNewTask(@RequestBody @Valid TaskInputDTO dto){
+        LOGGER.debug("Endpoint: Received dto, creating new task");
         taskService.createNewTask(dto);
     }
 
@@ -48,6 +49,7 @@ public class TaskEndpoint {
      */
     @GetMapping()
     public List<TaskDetailDTO> getAllTasks() {
+        LOGGER.debug("Endpoint: getAllTasks");
         return taskService.getAllTasks();
     }
 
@@ -58,7 +60,8 @@ public class TaskEndpoint {
      */
     @GetMapping(value = "/{id}")
     public TaskDetailDTO getTaskByID(@PathVariable UUID id){
-            return taskService.getTaskByID(id);
+        LOGGER.debug("Endpoint: getTaskByID");
+        return taskService.getTaskByID(id);
     }
 
 
@@ -68,6 +71,7 @@ public class TaskEndpoint {
      */
     @PutMapping(value = "/{id}")
     public TaskDetailDTO updateTaskByID(@PathVariable UUID id, @RequestBody @Valid TaskInputDTO taskDTO){
+        LOGGER.debug("Endpoint: updateTaskByID");
         return taskService.updateTaskByID(id, taskDTO);
     }
 
@@ -77,6 +81,7 @@ public class TaskEndpoint {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTaskByID(@PathVariable UUID id){
+        LOGGER.debug("Endpoint: deleteTaskByID");
         taskService.deleteTaskByID(id);
     }
 }

@@ -39,22 +39,26 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void createNewTask(TaskInputDTO task) {
+        LOGGER.debug("Service: Creating a new Task");
         taskRepository.save(taskMapper.taskCreateDTOtoEntity(task));
     }
 
     @Override
     public List<TaskDetailDTO> getAllTasks() {
+        LOGGER.debug("Service: Fetching all tasks");
         return taskRepository.findAll().stream().map(taskMapper::taskEntityToDetailDTO).toList();
     }
 
     @Override
     public TaskDetailDTO getTaskByID(UUID id) {
+        LOGGER.debug("Service: Fetching task by id");
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
         return taskMapper.taskEntityToDetailDTO(task);
     }
 
     @Override
     public TaskDetailDTO updateTaskByID(UUID id, TaskInputDTO taskDTO) {
+        LOGGER.debug("Service: Updating task by id");
        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
        task.setDescription(taskDTO.description());
        task.setCreatedAt(taskDTO.createdAt());
@@ -70,6 +74,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTaskByID(UUID id) {
+        LOGGER.debug("Service: Deleting task by id");
         taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("No task with id %s found", id)));
         taskRepository.deleteById(id);
     }
